@@ -16,14 +16,15 @@ using namespace SPTAG::Socket;
 
 Connection::Connection(ConnectionID p_connectionID,
                        boost::asio::ip::tcp::socket&& p_socket,
+                       boost::asio::io_context& p_ioContext,
                        const PacketHandlerMapPtr& p_handlerMap,
                        std::weak_ptr<ConnectionManager> p_connectionManager)
     : c_connectionID(p_connectionID),
       c_handlerMap(p_handlerMap),
       c_connectionManager(std::move(p_connectionManager)),
       m_socket(std::move(p_socket)),
-      m_strand(p_socket.get_executor().context()),
-      m_heartbeatTimer(p_socket.get_executor().context()),
+      m_strand(p_ioContext),
+      m_heartbeatTimer(p_ioContext),
       m_remoteConnectionID(c_invalidConnectionID),
       m_stopped(true),
       m_heartbeatStarted(false)
@@ -324,7 +325,7 @@ Connection::HandleHeartbeatRequest()
     if (0 == m_packetRead.Header().m_connectionID
         || c_connectionID == m_packetRead.Header().m_connectionID)
     {
-        m_packetRead.Header().m_connectionID;
+        msg.Header().m_connectionID = m_packetRead.Header().m_connectionID;
         msg.Header().WriteBuffer(msg.HeaderBuffer());
 
         AsyncSend(std::move(msg), nullptr);

@@ -21,6 +21,7 @@ ConnectionManager::ConnectionManager()
 
 ConnectionID
 ConnectionManager::AddConnection(boost::asio::ip::tcp::socket&& p_socket,
+                                 boost::asio::io_context& p_ioContext,
                                  const PacketHandlerMapPtr& p_handler,
                                  std::uint32_t p_heartbeatIntervalSeconds)
 {
@@ -39,6 +40,7 @@ ConnectionManager::AddConnection(boost::asio::ip::tcp::socket&& p_socket,
 
     auto connection = std::make_shared<Connection>(currID,
                                                    std::move(p_socket),
+                                                   p_ioContext,
                                                    p_handler,
                                                    std::weak_ptr<ConnectionManager>(shared_from_this()));
 

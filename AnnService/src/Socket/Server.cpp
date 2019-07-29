@@ -105,6 +105,7 @@ Server::StartAccept()
                                 if (!p_ec)
                                 {
                                     m_connectionManager->AddConnection(std::move(p_socket),
+                                                                       m_ioContext,
                                                                        m_requestHandlerMap,
                                                                        0);
                                 }

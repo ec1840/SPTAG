@@ -28,6 +28,7 @@ public:
 
     Connection(ConnectionID p_connectionID,
                boost::asio::ip::tcp::socket&& p_socket,
+               boost::asio::io_context& p_ioContext,
                const PacketHandlerMapPtr& p_handlerMap,
                std::weak_ptr<ConnectionManager> p_connectionManager);
 
