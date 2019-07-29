@@ -76,6 +76,7 @@ Client::ConnectToServer(const std::string& p_address,
     {
         p_ec = ErrorCode::Success;
         return m_connectionManager->AddConnection(std::move(socket),
+                                                  m_ioContext,
                                                   c_requestHandlerMap,
                                                   m_heartbeatIntervalSeconds);
     }

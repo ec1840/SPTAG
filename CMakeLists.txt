@@ -16,6 +16,8 @@ endfunction()
 
 if(NOT WIN32)
     CXX_COMPILER_DUMPVERSION(CXX_COMPILER_VERSION)
+    set(CMAKE_CXX_STANDARD 14)
+    set(CMAKE_CXX_STANDARD_REQUIRED ON)
 endif()
 
 if(${CMAKE_CXX_COMPILER_ID} STREQUAL "GNU")
@@ -29,8 +31,8 @@ elseif(WIN32)
     if(NOT MSVC14)
          message(FATAL_ERROR "On Windows, only MSVC version 14 are supported!") 
     endif()
-else ()
-    message(FATAL_ERROR "Unrecognized compiler (use GCC or MSVC)!")
+elseif(NOT "${CMAKE_CXX_COMPILER_ID}" MATCHES "Clang")
+    message(FATAL_ERROR "Unrecognized compiler (use GCC or MSVC or Clang)!")
 endif()
 
 if (NOT CMAKE_BUILD_TYPE)
@@ -64,7 +66,7 @@ endif()
 
 set (CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR})
 
-find_package(OpenMP)
+find_package(OpenMP REQUIRED)
 if (OpenMP_FOUND)
     set (CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${OpenMP_C_FLAGS}")
     set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OpenMP_CXX_FLAGS}")

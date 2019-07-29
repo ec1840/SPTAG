@@ -26,6 +26,7 @@ public:
     ConnectionManager();
 
     ConnectionID AddConnection(boost::asio::ip::tcp::socket&& p_socket,
+                               boost::asio::io_context& p_ioContext,
                                const PacketHandlerMapPtr& p_handlerMap,
                                std::uint32_t p_heartbeatIntervalSeconds);
 

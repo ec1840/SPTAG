@@ -66,7 +66,31 @@ Compiling the ALL_BUILD project in the Visual Studio (at least 2015) will genera
 docker build -t sptag .
 ```
 Will build a docker container with binaries in `/app/Release/`.
+It will generate a Release folder in the code directory which contains all the build targets.
 
+> For Mac:
+Install boost >= 1.67
+Install homebrew/llvm
+```
+brew install boost
+brew install llvm
+```
+
+Make sure clang and clang++ are in PATH, LDFLAGS and CPPFLAGS point to correct llvm distro, i.e. 
+```
+export PATH=$(brew --prefix llvm)/bin:$PATH
+export CC=$(brew --prefix llvm)/bin/clang
+export CXX=$(brew --prefix llvm)/bin/clang++
+export LDFLAGS="-L$(brew --prefix llvm)/lib"
+export CPPFLAGS="-I$(brew --prefix llvm)/include"
+```
+
+Then build the library
+
+```
+$ mkdir build
+$ cd build && cmake .. && make
+```
 ### **Verify** 
 
 Run the test (or Test.exe) in the Release folder to verify all the tests have passed.
