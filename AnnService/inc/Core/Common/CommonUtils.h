@@ -74,7 +74,7 @@ namespace SPTAG
                         float val = (float)atof(current);
                         arr.push_back(val);
                     }
-                    catch (std::exception e) {
+                    catch (const std::exception& e) {
                         std::cout << "Exception:" << e.what() << std::endl;
                         return -2;
                     }
