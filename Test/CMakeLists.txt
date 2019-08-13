@@ -23,10 +23,11 @@ include_directories(${PYTHON_INCLUDE_PATH} ${PROJECT_SOURCE_DIR}/AnnService ${PR
 file(GLOB TEST_HDR_FILES ${PROJECT_SOURCE_DIR}/Test/inc/Test.h)
 file(GLOB TEST_SRC_FILES ${PROJECT_SOURCE_DIR}/Test/src/*.cpp)
 add_executable (test ${TEST_SRC_FILES} ${TEST_HDR_FILES})
-target_link_libraries(test SPTAGLib ${Boost_LIBRARIES})
+target_link_libraries(test SPTAGLib ${Boost_LIBRARIES} ${AWSSDK_LINK_LIBRARIES} cpprestsdk::cpprest)
 
 install(TARGETS test
   RUNTIME DESTINATION bin  
   ARCHIVE DESTINATION lib
   LIBRARY DESTINATION lib)
 
+ENABLE_TESTING()

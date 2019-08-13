@@ -88,6 +88,18 @@ else()
     message (FATAL_ERROR "Could not find Boost 1.67!")
 endif()
 
+find_package(OpenSSL REQUIRED)
+find_package(cpprestsdk REQUIRED)
+set_target_properties(cpprestsdk::cpprest PROPERTIES
+  INTERFACE_LINK_LIBRARIES "cpprestsdk::cpprestsdk_boost_internal;cpprestsdk::cpprestsdk_openssl_internal;/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/System/Library/Frameworks/CoreFoundation.framework;/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/System/Library/Frameworks/Security.framework;cpprestsdk::cpprestsdk_boost_internal;cpprestsdk::cpprestsdk_openssl_internal;cpprestsdk::cpprestsdk_boost_internal;cpprestsdk::cpprestsdk_openssl_internal"
+)
+
+find_package(AWSSDK REQUIRED COMPONENTS s3)
+set_target_properties(AWS::aws-c-common PROPERTIES
+  INTERFACE_LINK_LIBRARIES "-pthread;pthread;/Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/System/Library/Frameworks/CoreFoundation.framework"
+)
+
+
 add_subdirectory (AnnService)
 add_subdirectory (Wrappers)
 add_subdirectory (Test)
